@@ -27,17 +27,7 @@ df = pd.DataFrame({
 
 })
 
-# --- 2. Visualisation ---
-plt.figure(figsize=(10, 5))
-plt.plot(df['mois'], df['co2'], marker='o', label='CO2 (kg)')
-plt.title('Émissions de CO₂ vs CA mensuel')
-plt.xlabel('Mois')
-plt.ylabel('Valeurs')
-plt.legend()
-plt.grid(True)
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
+
 
 # --- 3. Régression linéaire ---
 train_df = df.dropna(subset=['co2'])
@@ -65,15 +55,9 @@ print("\nPrédictions pour août et septembre 2024 :\n")
 print(df[df['mois'].dt.strftime('%Y-%m').isin(['2024-08', '2024-09'])][['mois', 'co2_pred_lin', 'co2_pred_sarimax']])
 
 # --- 6. Visualisation des prédictions pour août et septembre 2024 ---
-
-# Courbe existante de CO₂
 plt.figure(figsize=(10, 5))
 plt.plot(df['mois'], df['co2'], label='CO₂ réel', marker='o')
-
-# Ajout des prédictions linéaires
 plt.plot(df['mois'], df['co2_pred_lin'], label='Prédiction linéaire', linestyle='--', marker='x')
-
-# Ajout des prédictions SARIMAX
 plt.plot(df['mois'], df['co2_pred_sarimax'], label='Prédiction SARIMAX', linestyle=':', marker='s')
 
 plt.title("Prévisions CO₂ pour août et septembre 2024")
@@ -83,8 +67,9 @@ plt.grid(True)
 plt.legend()
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
 
-df.to_excel("resultats_predictions_co2.xlsx", index=False)
-
+# ✅ Sauvegarde du graphe en PNG AVANT affichage
 plt.savefig("graphique_predictions_co2.png", dpi=300)
+
+# ✅ Affichage à l’écran ensuite
+plt.show()
